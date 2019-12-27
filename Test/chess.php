@@ -12,19 +12,22 @@ $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 $input = json_decode(file_get_contents('php://input'),true);
 
+
 if(isset($_SERVER['HTTP_X_TOKEN'])) {
 	$input['token']=$_SERVER['HTTP_X_TOKEN'];
 }
 
 switch ($r=array_shift($request)) {
-    case 'board' : 
+	case 'board' : 
             switch ($b=array_shift($request)) {
-                case '':
+                case ''://debug_to_console("keno");
                 case null: handle_board($method,$input);
+							//debug_to_console("nullcase");
                             break;
                 case 'piece': handle_piece($method, $request[0],$request[1],$input);
                             break;
                 default: header("HTTP/1.1 404 Not Found");
+							
                             break;
 			}
 			break;
@@ -49,7 +52,13 @@ function handle_board($method,$input) {
         }
 		
 }
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
 
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
 function handle_piece($method, $x,$y,$input) {
 	if($method=='GET') {
         show_piece($x,$y);
@@ -66,8 +75,8 @@ function handle_player($method, $request,$input) {
 				   else {header("HTTP/1.1 400 Bad Request"); 
 						 print json_encode(['errormesg'=>"Method $method not allowed here."]);}
                     break;
-        case 'B': 
-		case 'W': handle_user($method, $b,$input);
+        case 'P1': 
+		case 'P2': handle_user($method, $b,$input);
 					break;		
 		default: header("HTTP/1.1 404 Not Found");
 				 print json_encode(['errormesg'=>"Player $b not found."]);

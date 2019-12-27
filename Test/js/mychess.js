@@ -19,10 +19,10 @@ $(function () {
 
 
 function draw_empty_board(p) {
-	if(p!='p1') {p='p2';}
+	if(p!='P1') {p='P2';}
 	var draw_init = {
-		'p2': {i1:10,i2:0,istep:-1,j1:1,j2:11,jstep:1},
-		'p1': {i1:1,i2:9,istep:1, j1:10,j2:0,jstep:-1}
+		'P2': {i1:10,i2:0,istep:-1,j1:1,j2:11,jstep:1},
+		'P1': {i1:1,i2:9,istep:1, j1:10,j2:0,jstep:-1}
 	};
 	var s=draw_init[p];
 	var t='<table id="chess_table">';
@@ -41,8 +41,9 @@ function draw_empty_board(p) {
 
 function fill_board() {
 	$.ajax({url: "chess.php/board/", 
-		headers: {"X-Token": me.token},
+		headers: {"X-Token": me.token},		
 		success: fill_board_by_data });
+		alert("me.token"+ me.token);
 }
 
 function reset_board() {
@@ -51,6 +52,7 @@ function reset_board() {
 	$('#game_initializer').show(2000);
 }
 function fill_board_by_data(data) {
+	alert(data);
 	board=data;
 	for(var i=0;i<data.length;i++) {
 		var o = data[i];
@@ -78,16 +80,16 @@ function login_to_game() {
 		alert('You have to set a username');
 		return;
 	}
-	var p_color = $('#pcolor').val();
-	draw_empty_board(p_color);
+	var player = $('#player').val();
+	draw_empty_board(player );
 	fill_board();
 	
-	$.ajax({url: "chess.php/players/"+p_color, 
+	$.ajax({url: "chess.php/players/"+player , 
 			method: 'PUT',
 			dataType: "json",
 			headers: {"X-Token": me.token},
 			contentType: 'application/json',
-			data: JSON.stringify( {username: $('#username').val(), piece_color: p_color}),
+			data: JSON.stringify( {username: $('#username').val(), piece_color: player }),
 			success: login_result,
 			error: login_error});
 }

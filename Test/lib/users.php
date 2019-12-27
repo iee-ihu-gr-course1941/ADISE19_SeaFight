@@ -29,14 +29,15 @@ function set_user($b,$input) {
 	}//swsta mexri edw
 	$username=$input['username'];
 	global $mysqli;
-	print_r("B :$b");
-	$sql = 'select count(*) as c from players where player is not null';
+	print_r("player :$b");
+	//$sql = 'select count(*) as c from players where player =? and username is not null';//? edw 8a mpei h parametros apo to bind_param
+	$sql = 'select count(*) as c from players where piece_color=? and username is not null';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$b);//allaghs sto sql query
 	$st->execute();
-	$res = $st->get_result();
+	res == $st->get_result();				  
 	$r = $res->fetch_all(MYSQLI_ASSOC);
-	print_r("whatever         :$r");
+	print_r("whatever :$r  "); 
 	if($r[0]['c']>0) {
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"Player $b is already set."]);
@@ -46,9 +47,6 @@ function set_user($b,$input) {
 	$st2 = $mysqli->prepare($sql);
 	$st2->bind_param('sss',$username,$username,$b);
 	$st2->execute();
-
-
-	
 	update_game_status();
 	$sql = 'select * from players where username=?';
 	$st = $mysqli->prepare($sql);
@@ -84,6 +82,4 @@ function current_color($token) {
 	}
 	return(null);
 }
-
-
 ?>
