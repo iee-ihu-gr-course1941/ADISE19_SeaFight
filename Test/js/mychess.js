@@ -26,16 +26,24 @@ function draw_empty_board(p) {
 	};
 	var s=draw_init[p];
 	var t='<table id="chess_table">';
+	var t2='<table id="fire_table">';
 	for(var i=s.i1;i!=s.i2;i+=s.istep) {
 		t += '<tr>';
+		t2 += '<tr>';
 		for(var j=s.j1;j!=s.j2;j+=s.jstep) {
 			t += '<td class="chess_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>'; 
+			t2+= '<td class="chess_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>'; 
 		}
 		t+='</tr>';
+		t2 += '</tr>';
 	}
 	t+='</table>';
+		t2+='</table>';
 	
 	$('#chess_board').html(t);
+	$('.chess_square').click(click_on_piece);
+	
+	$('#fire_board').html(t2);
 	$('.chess_square').click(click_on_piece);
 }
 
@@ -54,13 +62,22 @@ function reset_board() {
 function fill_board_by_data(data) {
 	alert(data);
 	board=data;
+	//for(var i=0;i<data.length;i++) {
+	//	var o = data[i];
+	//	var id = '#square_'+ o.x +'_' + o.y;
+	//	var c = (o.piece!=null)?o.piece:''; //onoma eikonas
+	//	var pc= (o.piece!=null)?'piece'+o.piece_color:'';
+	//	var im = (o.piece!=null)?'<img class="piece '+pc+'" src="images/'+c+'.png">':'';//prepare build
+	//	$(id).addClass(o.b_color+'_square').html(im);////actual builts
+	//}
 	for(var i=0;i<data.length;i++) {
 		var o = data[i];
 		var id = '#square_'+ o.x +'_' + o.y;
-		var c = (o.piece!=null)?o.piece_color + o.piece:'';
+		var c = (o.piece!=null)?o.piece:''; //onoma eikonas
+		//console.log("  "+c);//keno
 		var pc= (o.piece!=null)?'piece'+o.piece_color:'';
-		var im = (o.piece!=null)?'<img class="piece '+pc+'" src="images/'+c+'.png">':'';
-		$(id).addClass(o.b_color+'_square').html(im);
+		var im = (o.piece!=null)?'<img class="piece '+pc+'" src="images/'+"BB"+'.png">':'';//prepare build
+		$(id).addClass(o.b_color+'_square').html(im);//actual builts
 	}
  
 	$('.ui-droppable').droppable( "disable" );
@@ -81,7 +98,8 @@ function login_to_game() {
 		return;
 	}
 	var player = $('#player').val();
-	draw_empty_board(player );
+	alert("Player :"+player);
+	draw_empty_board(player);
 	fill_board();
 	
 	$.ajax({url: "chess.php/players/"+player , 
@@ -89,7 +107,8 @@ function login_to_game() {
 			dataType: "json",
 			headers: {"X-Token": me.token},
 			contentType: 'application/json',
-			data: JSON.stringify( {username: $('#username').val(), piece_color: player }),
+			//data: JSON.stringify( {username: $('#username').val(), piece_color: player }),
+			data: JSON.stringify( {username: $('#username').val(), piece_color: player}),
 			success: login_result,
 			error: login_error});
 }

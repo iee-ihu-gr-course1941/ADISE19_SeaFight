@@ -5,3 +5,8 @@ TD.W_square {background-color:#FFF;}
 IMG.piece {width: 2.1em; height:2.8em;}
 TD.pmove {border:3px solid blue; background-color:yellow;}
 TD.tomove {border:3px solid blue; background-color:blue;}
+DIV.fire_board{
+  height: 200px;
+  width: 50%;
+  background-color: powderblue;
+}

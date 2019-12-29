@@ -36,6 +36,7 @@ switch ($r=array_shift($request)) {
 			else {header("HTTP/1.1 404 Not Found");}
 			break;
 	case 'players':
+	debug_to_console("Test");
 	handle_player($method, $request,$input);
             break;
     default:  header("HTTP/1.1 404 Not Found");
@@ -68,7 +69,7 @@ function handle_piece($method, $x,$y,$input) {
 }
  
 function handle_player($method, $request,$input) {
-	
+	debug_to_console("Test");
 	switch ($b=array_shift($request)) {
 		case '':
 		case null: if($method=='GET') {show_users($method);}
