@@ -29,15 +29,13 @@ function set_user($b,$input) {
 	}//swsta mexri edw
 	$username=$input['username'];
 	global $mysqli;
-	print_r("player :$b");
-	//$sql = 'select count(*) as c from players where player =? and username is not null';//? edw 8a mpei h parametros apo to bind_param
-	$sql = 'select count(*) as c from players where piece_color=? and username is not null';
+	$sql = 'select count(*) as c from players where player =? and username is not null';//? edw 8a mpei h parametros apo to bind_param
+	//$sql = 'select count(*) as c from players where piece_color=? and username is not null';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$b);//allaghs sto sql query
 	$st->execute();
-	res == $st->get_result();				  
+	$res = $st->get_result();		//==		  
 	$r = $res->fetch_all(MYSQLI_ASSOC);
-	print_r("whatever :$r  "); 
 	if($r[0]['c']>0) {
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"Player $b is already set."]);

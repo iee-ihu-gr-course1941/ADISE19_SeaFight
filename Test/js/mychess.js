@@ -97,8 +97,10 @@ function login_to_game() {
 		alert('You have to set a username');
 		return;
 	}
+	var usernAme = $('#username').val();
 	var player = $('#player').val();
 	alert("Player :"+player);
+	alert("Username :"+usernAme);
 	draw_empty_board(player);
 	fill_board();
 	
@@ -121,8 +123,9 @@ function login_result(data) {
 }
 
 function login_error(data,y,z,c) {
-	var x = data.responseJSON;
-	alert(x.errormesg);
+	var x;
+	x = data.responseJSON;
+	alert(data.responseJSON.errormesg);
 }
 
 function game_status_update() {
