@@ -110,14 +110,14 @@ function login_to_game() {
 			headers: {"X-Token": me.token},
 			contentType: 'application/json',
 			//data: JSON.stringify( {username: $('#username').val(), piece_color: player }),
-			data: JSON.stringify( {username: $('#username').val(), piece_color: player}),
+			data: JSON.stringify( {username: $('#username').val(), player: player}),
 			success: login_result,
 			error: login_error});
 }
 
 function login_result(data) {
 	me = data[0];
-	$('#game_initializer').hide();
+	//$('#game_initializer').hide();
 	update_info();
 	game_status_update();
 }

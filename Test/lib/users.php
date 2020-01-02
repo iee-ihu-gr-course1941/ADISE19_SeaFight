@@ -46,7 +46,7 @@ function set_user($b,$input) {
 	$st2->bind_param('sss',$username,$username,$b);
 	$st2->execute();
 	update_game_status();
-	$sql = 'select * from players where username=?';
+	$sql = 'select * from players where player=?';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$b);
 	$st->execute();
