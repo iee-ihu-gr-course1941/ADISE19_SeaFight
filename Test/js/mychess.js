@@ -122,6 +122,78 @@ function login_result(data) {
 	game_status_update();
 }
 
+function place(data) {
+	alert(data);
+	board=data;
+	var r = document.getElementById("radio").checked;
+	var r2 = document.getElementById("radio2").checked;
+	var r3 = document.getElementById("radio3").checked;
+	var r4 = document.getElementById("radio4").checked;
+	var r5 = document.getElementById("radio5").checked;
+	//for(var i=0;i<data.length;i++) {
+	//	var o = data[i];
+	//	var id = '#square_'+ o.x +'_' + o.y;
+	//	var c = (o.piece!=null)?o.piece:''; //onoma eikonas
+	//	var pc= (o.piece!=null)?'piece'+o.piece_color:'';
+	//	var im = (o.piece!=null)?'<img class="piece '+pc+'" src="images/'+c+'.png">':'';//prepare build
+	//	$(id).addClass(o.b_color+'_square').html(im);////actual builts
+	//}
+	if(r)//S1 check sk5 move piec
+	{
+	var s = $('#the_move').val();
+	var a = s.trim().split(/[ ]+/);
+	if(a.length!=4) {
+		alert('Must give 4 numbers');
+		return;
+	}
+	$.ajax({url: "chess.php/board/piece/"+a[0]+'/'+a[1], 
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {x: a[2], y: a[3]}),
+			headers: {"X-Token": me.token},
+			success: move_result,
+			error: login_error});
+	
+}
+		
+	
+	else if(r2)//s2
+	{
+	
+	
+	}else if(r3)//s3
+	{
+		
+		
+	}else if(r4)//s4
+	{
+			
+	
+	}else if(r5)//s5
+	{
+		
+		
+	}
+	
+	
+	for(var i=0;i<data.length;i++) {
+		var o = data[i];
+		var id = '#square_'+ o.x +'_' + o.y;
+		var c = (o.piece!=null)?o.piece:''; //onoma eikonas
+		//console.log("  "+c);//keno
+		var pc= (o.piece!=null)?'piece'+o.piece_color:'';
+		var im = (o.piece!=null)?'<img class="piece '+pc+'" src="images/'+"BB"+'.png">':'';//prepare build
+		$(id).addClass(o.b_color+'_square').html(im);//actual builts
+	}
+	
+	
+ 
+	$('.ui-droppable').droppable( "disable" );
+		
+
+}
+
 function login_error(data,y,z,c) {
 	var x;
 	x = data.responseJSON;

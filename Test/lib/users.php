@@ -76,7 +76,7 @@ function current_color($token) {
 	$st->execute();
 	$res = $st->get_result();
 	if($row=$res->fetch_assoc()) {
-		return($row['piece_color']);
+		return($row['player']);
 	}
 	return(null);
 }
