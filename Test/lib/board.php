@@ -13,7 +13,7 @@ function show_piece($x,$y) {
 	print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
 }
    
-function move_piece($x,$y,$x2,$y2,$token) {
+function place($x2,$y2,$token) {//rename to place
 	
 	if($token==null || $token=='') {
 		header("HTTP/1.1 400 Bad Request");
@@ -33,22 +33,24 @@ function move_piece($x,$y,$x2,$y2,$token) {
 		print json_encode(['errormesg'=>"Game is not in action."]);
 		exit;
 	}
-	if($status['p_turn']!=$color) {
-		header("HTTP/1.1 400 Bad Request");
-		print json_encode(['errormesg'=>"It is not your turn."]);
-		exit;
-	}
+	//if($status['p_turn']!=$color) {
+	//	header("HTTP/1.1 400 Bad Request");
+	//	print json_encode(['errormesg'=>"It is not your turn."]);
+	//	exit;
+	//}
+	
 	$orig_board=read_board();
 	$board=convert_board($orig_board);
-	$n = add_valid_moves_to_piece($board,$color,$x,$y);
-	if($n==0) {
-		header("HTTP/1.1 400 Bad Request");
-		print json_encode(['errormesg'=>"This piece cannot move."]);
-		exit;
-	}
-	foreach($board[$x][$y]['moves'] as $i=>$move) {
+	//$n = add_valid_moves_to_piece($board,$color,$x,$y);
+	
+	//if($n==0) {
+	//	header("HTTP/1.1 400 Bad Request");
+	//	print json_encode(['errormesg'=>"This piece cannot move."]);
+	//	exit;
+	//}
+	foreach($board[$x2][$y2]['moves'] as $i=>$move) {
 		if($x2==$move['x'] && $y2==$move['y']) {
-			do_move($x,$y,$x2,$y2);
+			place_piece($x2,$y2);
 			exit;
 		}
 	}
@@ -187,11 +189,12 @@ function pawn_moves(&$board,$b,$x,$y) {
 	
 }
 
-function do_move($x,$y,$x2,$y2) {
+function place_piece($x2,$y2) {//rename to place
+
 	global $mysqli;
-	$sql = 'call `move_piece`(?,?,?,?);';
+	$sql = 'call `place_piece`(?,?);';
 	$st = $mysqli->prepare($sql);
-	$st->bind_param('iiii',$x,$y,$x2,$y2 );
+	$st->bind_param('ii',$x2,$y2 );
 	$st->execute();
 
 	header('Content-type: application/json');

@@ -10,7 +10,8 @@ $(function () {
 	
 	$('#chess_login').click( login_to_game);
 	$('#chess_reset').click( reset_board);
-	$('#do_move').click( do_move);
+	$('#do_move').click(place);
+	$('#shipsplace').click(place);	
 	$('#move_div').hide();
 	game_status_update();
 	$('#the_move_src').change( update_moves_selector);
@@ -138,43 +139,107 @@ function place(data) {
 	//	var im = (o.piece!=null)?'<img class="piece '+pc+'" src="images/'+c+'.png">':'';//prepare build
 	//	$(id).addClass(o.b_color+'_square').html(im);////actual builts
 	//}
-	if(r)//S1 check sk5 move piec
+	if(r)//meta apo ka9e for ektelesh 8a allaza to innerHTMLtou TakeShip se x=x+1 kai y=y 
 	{
-	var s = $('#the_move').val();
-	var a = s.trim().split(/[ ]+/);
-	if(a.length!=4) {
-		alert('Must give 4 numbers');
-		return;
-	}
-	$.ajax({url: "chess.php/board/piece/"+a[0]+'/'+a[1], 
-			method: 'PUT',
-			dataType: "json",
-			contentType: 'application/json',
-			data: JSON.stringify( {x: a[2], y: a[3]}),
-			headers: {"X-Token": me.token},
-			success: move_result,
-			error: login_error});
-	
-}
 		
-	
+	var i;	
+	for(i=0; i<2;i++){	
+		var s = $('#TakeShip').val();
+		var a = s.trim().split(/[ ]+/);
+		if(a.length!=4) {
+			alert('Must give 4 numbers');
+			return;
+		}
+		$.ajax({url: "chess.php/board/piece/"+a[0]+'/'+a[1], 
+				method: 'PUT',
+				dataType: "json",
+				contentType: 'application/json',
+				data: JSON.stringify( {x: a[2], y: a[3]}),
+				headers: {"X-Token": me.token},
+				success: move_result,
+				error: login_error});
+						 }
+    }
 	else if(r2)//s2
 	{
-	
-	
-	}else if(r3)//s3
+	var i;		
+	for(i=0; i<2;i++){	
+		var s = $('#TakeShip').val();
+		var a = s.trim().split(/[ ]+/);
+		if(a.length!=4) {
+			alert('Must give 4 numbers');
+			return;
+		}
+		$.ajax({url: "chess.php/board/piece/"+a[0]+'/'+a[1], 
+				method: 'PUT',
+				dataType: "json",
+				contentType: 'application/json',
+				data: JSON.stringify( {x: a[2], y: a[3]}),
+				headers: {"X-Token": me.token},
+				success: move_result,
+				error: login_error});
+						 }
+    }
+	else if(r3)//s3
 	{
-		
-		
-	}else if(r4)//s4
+		var i;	
+	for(i=0; i<3;i++){	
+		var s = $('#TakeShip').val();
+		var a = s.trim().split(/[ ]+/);
+		if(a.length!=4) {
+			alert('Must give 4 numbers');
+			return;
+		}
+		$.ajax({url: "chess.php/board/piece/"+a[0]+'/'+a[1], 
+				method: 'PUT',
+				dataType: "json",
+				contentType: 'application/json',
+				data: JSON.stringify( {x: a[2], y: a[3]}),
+				headers: {"X-Token": me.token},
+				success: move_result,
+				error: login_error});
+						 }
+    }
+	else if(r4)//s4
 	{
-			
+		var i;	
+	for(i=0; i<4;i++){	
+		var s = $('#TakeShip').val();
+		var a = s.trim().split(/[ ]+/);
+		if(a.length!=4) {
+			alert('Must give 4 numbers');
+			return;
+		}
+		$.ajax({url: "chess.php/board/piece/"+a[0]+'/'+a[1], 
+				method: 'PUT',
+				dataType: "json",
+				contentType: 'application/json',
+				data: JSON.stringify( {x: a[2], y: a[3]}),
+				headers: {"X-Token": me.token},
+				success: move_result,
+				error: login_error});
+						 }
+    }
+	else if(r5)//s5
+	{var i;	
+	for(i=0; i<5;i++){	
+		var s = $('#TakeShip').val(); 
+		var a = s.trim().split(/[ ]+/);
+		if(a.length!=4) {
+			alert('Must give 4 numbers');
+			return;
+		}
+		$.ajax({url: "chess.php/board/piece/"+a[0]+'/'+a[1], 
+				method: 'PUT',
+				dataType: "json",
+				contentType: 'application/json',
+				data: JSON.stringify( {x: a[2], y: a[3]}),
+				headers: {"X-Token": me.token},
+				success: move_result,
+				error: login_error});
+						 }
+    }
 	
-	}else if(r5)//s5
-	{
-		
-		
-	}
 	
 	
 	for(var i=0;i<data.length;i++) {

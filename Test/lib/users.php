@@ -22,6 +22,7 @@ function show_user($b) {
 
 function set_user($b,$input) {
 	//print_r("whatever :$input");
+	
 	if(!isset($input['username'])) {
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"No username given."]);
@@ -46,6 +47,8 @@ function set_user($b,$input) {
 	$st2->bind_param('sss',$username,$username,$b);
 	$st2->execute();
 	update_game_status();
+	
+	
 	$sql = 'select * from players where player=?';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$b);
