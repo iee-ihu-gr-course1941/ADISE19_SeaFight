@@ -6,6 +6,9 @@
 -- Χρόνος δημιουργίας: 14 Ιαν 2020 στις 14:58:55
 -- Έκδοση διακομιστή: 10.4.10-MariaDB
 -- Έκδοση PHP: 7.3.12
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`battleship` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `battleship`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
